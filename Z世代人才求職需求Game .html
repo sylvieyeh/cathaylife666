@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職場冒險家測驗｜金融保險職涯探索</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#12463A;
+  --deep2:#0E3A30;
+  --mid:#2E9973;
+  --mid-soft:#3EAE86;
+  --light:#8FDCB4;
+  --mint-bg:#F0FAF4;
+  --cream:#FFFBF1;
+  --gold:#F2B705;
+  --gold-soft:#FFD873;
+  --coral:#FF8A61;
+  --text-dark:#153029;
+  --text-mid:#4C6459;
+  --text-soft:#7C9186;
+  --card-shadow: 0 10px 30px rgba(18,70,58,0.10);
+  --card-shadow-hover: 0 14px 36px rgba(18,70,58,0.16);
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  background:
+    radial-gradient(circle at 12% 8%, #E4F5EC 0%, transparent 45%),
+    radial-gradient(circle at 90% 85%, #FFF3D9 0%, transparent 40%),
+    var(--cream);
+  color:var(--text-dark);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.display{font-family:"Baloo 2","Noto Sans TC",sans-serif;}
+#app{max-width:640px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;padding-bottom:12px;}
+
+/* ---------- top bar ---------- */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 6px;
+}
+.brand{display:flex;align-items:center;gap:8px;font-family:"Baloo 2";font-weight:700;color:var(--deep);font-size:15px;letter-spacing:.5px;}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);}
+
+/* ---------- progress + tree ---------- */
+.progress-wrap{padding:6px 22px 4px;}
+.progress-track{
+  height:10px;background:#E1F0E6;border-radius:20px;overflow:hidden;position:relative;
+  box-shadow:inset 0 1px 3px rgba(18,70,58,.12);
+}
+.progress-fill{
+  height:100%;border-radius:20px;
+  background:linear-gradient(90deg,var(--mid),var(--light));
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:12px;color:var(--text-soft);}
+.chapter-tag{
+  font-family:"Baloo 2";font-weight:700;color:var(--mid);background:#E4F5EC;
+  padding:3px 10px;border-radius:20px;font-size:11px;letter-spacing:.3px;
+}
+
+/* ---------- tree mascot ---------- */
+.tree-stage{display:flex;justify-content:center;padding:6px 0 2px;}
+.tree-stage svg{width:56px;height:56px;filter:drop-shadow(0 4px 6px rgba(18,70,58,.15));}
+
+/* ---------- screens ---------- */
+.screen{flex:1;display:flex;flex-direction:column;padding:8px 22px 28px;animation:fadeIn .45s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---------- intro ---------- */
+.intro-hero{
+  background:linear-gradient(160deg,var(--deep) 0%,var(--deep2) 60%);
+  border-radius:var(--radius-lg);
+  padding:36px 26px 30px;
+  color:#fff;position:relative;overflow:hidden;
+  box-shadow:var(--card-shadow);
+  margin-top:6px;
+}
+.intro-hero::before{
+  content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(242,183,5,.35),transparent 70%);
+}
+.intro-hero::after{
+  content:"";position:absolute;left:-50px;bottom:-60px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(143,220,180,.25),transparent 70%);
+}
+.intro-eyebrow{font-size:12px;letter-spacing:2px;color:var(--gold-soft);font-weight:700;position:relative;}
+.intro-title{font-family:"Baloo 2";font-size:26px;line-height:1.5;font-weight:700;margin:10px 0 8px;position:relative;}
+.intro-sub{font-size:14px;line-height:1.9;color:#DCEFE4;position:relative;margin-bottom:18px;}
+.intro-meta{display:flex;gap:10px;flex-wrap:wrap;position:relative;}
+.pill{font-size:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:20px;}
+
+.intro-cards{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+.mini-card{
+  background:#fff;border-radius:var(--radius-md);padding:16px 18px;
+  box-shadow:var(--card-shadow);display:flex;gap:14px;align-items:center;
+}
+.mini-card .ico{font-size:26px;flex-shrink:0;}
+.mini-card .txt strong{display:block;font-size:14px;color:var(--deep);margin-bottom:2px;}
+.mini-card .txt span{font-size:12.5px;color:var(--text-mid);line-height:1.6;}
+
+.cta-btn{
+  margin-top:26px;background:linear-gradient(135deg,var(--mid),var(--mid-soft));
+  color:#fff;border:none;padding:16px;border-radius:20px;font-size:16px;font-weight:700;
+  font-family:"Baloo 2";letter-spacing:1px;cursor:pointer;box-shadow:0 10px 22px rgba(46,153,115,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(46,153,115,.42);}
+.cta-btn:active{transform:translateY(0);}
+.cta-secondary{
+  margin-top:10px;background:none;border:1.5px solid #CFE6D8;color:var(--mid);
+  padding:12px;border-radius:18px;font-size:13.5px;font-weight:600;cursor:pointer;
+}
+
+/* ---------- quiz question ---------- */
+.q-card{
+  background:#fff;border-radius:var(--radius-lg);padding:26px 22px 24px;
+  box-shadow:var(--card-shadow);margin-top:10px;flex:1;display:flex;flex-direction:column;
+}
+.q-chapter-label{font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.q-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:10px;background:var(--mint-bg);color:var(--deep);
+  font-family:"Baloo 2";font-weight:700;font-size:13px;
+}
+.q-text{font-size:18px;line-height:1.75;font-weight:700;color:var(--text-dark);margin:6px 0 22px;}
+.q-hint{font-size:12.5px;color:var(--text-soft);margin:-14px 0 18px;}
+
+/* scale buttons */
+.scale-row{display:flex;flex-direction:column;gap:10px;margin-top:auto;}
+.scale-caption{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-soft);padding:0 2px;margin-bottom:4px;}
+.scale-options{display:flex;gap:8px;}
+.scale-opt{
+  flex:1;aspect-ratio:1/1;border-radius:16px;border:2px solid #E4EFE9;background:#FAFDFB;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  cursor:pointer;transition:.15s;font-family:"Baloo 2";
+}
+.scale-opt .num{font-size:18px;font-weight:700;color:var(--text-mid);}
+.scale-opt:hover{border-color:var(--light);background:var(--mint-bg);}
+.scale-opt.sel{
+  background:linear-gradient(150deg,var(--mid),var(--mid-soft));border-color:var(--mid);
+  box-shadow:0 8px 18px rgba(46,153,115,.32);
+}
+.scale-opt.sel .num{color:#fff;}
+
+/* choice cards (multi / single) */
+.choice-list{display:flex;flex-direction:column;gap:10px;}
+.text-input-wrap{margin-top:auto;}
+.text-input{
+  width:100%;padding:16px;border-radius:16px;border:2px solid #E4EFE9;background:#FAFDFB;
+  font-size:15px;color:var(--text-dark);font-family:"Noto Sans TC",sans-serif;
+}
+.text-input:focus{outline:none;border-color:var(--mid);background:#fff;}
+.choice-card{
+  border:2px solid #E4EFE9;border-radius:16px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
+  cursor:pointer;transition:.15s;background:#FAFDFB;
+}
+.choice-card:hover{border-color:var(--light);background:var(--mint-bg);}
+.choice-card.sel{border-color:var(--mid);background:linear-gradient(150deg,#EAF9F1,#F5FFFA);box-shadow:0 6px 14px rgba(46,153,115,.15);}
+.choice-mark{
+  width:22px;height:22px;border-radius:7px;border:2px solid #CFE0D6;flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:.15s;
+}
+.choice-card.sel .choice-mark{background:var(--mid);border-color:var(--mid);}
+.choice-card.single .choice-mark{border-radius:50%;}
+.choice-label{font-size:14px;line-height:1.6;color:var(--text-dark);}
+
+.nav-row{display:flex;gap:10px;margin-top:22px;}
+.nav-btn{
+  flex:1;padding:14px;border-radius:16px;border:none;font-size:14.5px;font-weight:700;cursor:pointer;
+  font-family:"Baloo 2",sans-serif;transition:.15s;
+}
+.nav-btn.next{background:linear-gradient(135deg,var(--mid),var(--mid-soft));color:#fff;box-shadow:0 8px 18px rgba(46,153,115,.3);}
+.nav-btn.next:disabled{background:#DCE8E1;color:#A9BDB2;box-shadow:none;cursor:not-allowed;}
+.nav-btn.back{background:#F1F5F2;color:var(--text-mid);flex:.55;}
+
+/* ---------- loading ---------- */
+.loading-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 30px;}
+.loading-screen svg{width:110px;height:110px;margin-bottom:22px;}
+.loading-screen p{color:var(--text-mid);font-size:14px;}
+.loading-bar{width:200px;height:6px;background:#E1F0E6;border-radius:10px;overflow:hidden;margin-top:16px;}
+.loading-bar-fill{height:100%;width:30%;background:linear-gradient(90deg,var(--mid),var(--gold));border-radius:10px;animation:load 1.4s ease-in-out infinite;}
+@keyframes load{0%{transform:translateX(-100%);}100%{transform:translateX(400%);}}
+
+/* ---------- result ---------- */
+.result-hero{
+  background:linear-gradient(160deg,var(--deep),var(--deep2));border-radius:var(--radius-lg);
+  color:#fff;padding:32px 24px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--card-shadow);margin-top:8px;
+}
+.result-hero::before{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(242,183,5,.3),transparent 70%);}
+.result-eyebrow{font-size:12px;color:var(--gold-soft);letter-spacing:2px;font-weight:700;position:relative;}
+.result-type-icon{font-size:52px;margin:14px 0 6px;position:relative;}
+.result-type-name{font-family:"Baloo 2";font-size:24px;font-weight:700;position:relative;}
+.result-keywords{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px;position:relative;}
+.kw{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);font-size:11.5px;padding:5px 11px;border-radius:20px;}
+
+.section-card{background:#fff;border-radius:var(--radius-lg);padding:22px 22px 20px;margin-top:16px;box-shadow:var(--card-shadow);}
+.section-title{font-family:"Baloo 2";font-size:15px;font-weight:700;color:var(--deep);display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.section-title .badge{width:26px;height:26px;border-radius:9px;background:var(--mint-bg);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.result-desc{font-size:13.5px;line-height:1.9;color:var(--text-mid);margin-bottom:14px;}
+
+.gear-rank{display:flex;flex-direction:column;gap:10px;}
+.gear-item{display:flex;align-items:center;gap:12px;background:var(--mint-bg);border-radius:14px;padding:12px 14px;}
+.gear-medal{font-size:20px;width:28px;text-align:center;}
+.gear-icon{font-size:22px;}
+.gear-name{font-size:13.5px;font-weight:700;color:var(--text-dark);}
+.gear-desc{font-size:11.5px;color:var(--text-soft);margin-top:1px;}
+
+.meter-wrap{margin:6px 0 14px;}
+.meter-label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-mid);margin-bottom:6px;font-weight:700;}
+.meter-track{height:14px;background:#EEF6F1;border-radius:20px;overflow:hidden;}
+.meter-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--coral),var(--gold),var(--mid));transition:width .8s ease;}
+.tip-box{background:#FFF7E6;border:1px solid #FCE4A8;border-radius:14px;padding:14px 16px;font-size:12.5px;line-height:1.85;color:#7A5B10;margin-top:8px;}
+.tip-box b{color:#5C4300;}
+
+.action-row{display:flex;flex-direction:column;gap:10px;margin-top:22px;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ============================================================
+   資料模型 & 題目內容
+============================================================ */
+const GEAR_META = {
+  q14_1:{icon:'💰',name:'透明薪資裝備',plainName:'薪資與獎金透明度',desc:'明確揭露薪資區間、獎金紅利或激勵措施'},
+  q14_2:{icon:'🕰️',name:'平衡續航裝備',plainName:'工時彈性與加班補償',desc:'清楚說明尖峰期、加班費或補休機制、彈性工時或團隊支援方式'},
+  q14_3:{icon:'🎓',name:'新手訓練裝備',plainName:'新人訓練與導師制度',desc:'完整新人訓練、OJT（工作崗位培訓）、mentor 或主管帶領'},
+  q14_4:{icon:'📈',name:'成長地圖裝備',plainName:'晉升與能力發展路徑',desc:'提供部門或職位的晉升／能力發展路徑'},
+  q14_5:{icon:'🧠',name:'數位升級裝備',plainName:'數位工具與AI輔助',desc:'能有 AI 工具輔助、數據／資料分析工具、自動化流程'},
+  q14_6:{icon:'🤝',name:'團隊補給裝備',plainName:'團隊文化與真實心聲',desc:'透過新人、學長姐或主管故事了解真實團隊氛圍'},
+  q14_7:{icon:'📚',name:'專業加值裝備',plainName:'專業證照與學習資源補助',desc:'提供專業證照、課程或內部學習資源補助'}
+};
+
+const TYPE_META = {
+  achievement:{icon:'🏆',name:'成就開拓者',
+    desc:'你在職涯冒險中重視明確回報與制度透明。對你來說，一份工作是否值得投入，不只取決於工作內容，也取決於薪資區間、獎金制度、調薪邏輯與長期財務安全是否清楚。',
+    gear:['透明薪資與獎金制度','明確升遷與調薪機制','專業培訓與證照補助'],
+    keywords:['制度透明','專業累積','績效回饋','長期穩定']},
+  balance:{icon:'⚖️',name:'平衡守護者',
+    desc:'你重視工作與生活能否長期維持平衡。你不一定排斥忙碌，但會在意忙碌是否合理、加班是否有補償、團隊是否有支援，以及工作節奏是否能讓人健康地持續發展。',
+    gear:['彈性工時或清楚的加班補償','團隊支援與工作量分配說明','穩定制度與完整福利'],
+    keywords:['穩定發展','制度清楚','心理安全','長期職涯']},
+  growth:{icon:'🚀',name:'成長探索家',
+    desc:'你期待工作能讓自己持續升級。你不只是想完成任務，更希望知道自己在 3 個月、6 個月、1 年後會學到什麼、累積什麼能力，以及這些能力未來能如何轉換成更大的職涯可能。',
+    gear:['新人培訓與 OJT（工作崗位培訓）','部門或職位的晉升／能力發展路徑','Mentor 或主管帶領制度'],
+    keywords:['專業養成','技能累積','職涯地圖','成長路徑']},
+  care:{icon:'🤝',name:'關懷協調家',
+    desc:'你在意工作是否能與人產生連結。比起單純處理文件或流程，你更希望理解工作背後的客戶需求，並在溝通、協調與問題解決中創造價值。你也會重視團隊氛圍與主管支持。',
+    gear:['真實員工故事與部門日常','友善團隊文化','溝通與客戶應對訓練'],
+    keywords:['同理心','客戶溝通','團隊合作','工作意義']},
+  digital:{icon:'🧠',name:'數位解題家',
+    desc:'你喜歡用工具提升效率，也在意工作是否能接觸數位化流程。對你來說，金融保險業不只是傳統穩定產業，也可以是結合資料、AI、流程改善與系統思維的專業場域。',
+    gear:['智能工作台或數位系統','資料分析與流程改善機會','AI 工具或金融科技應用'],
+    keywords:['數位工具','資料分析','流程優化','金融轉型']}
+};
+
+const Q11_OPTIONS = [
+  {id:'q11_doc', label:'確認申請文件是否齊全（如診斷證明、收據、相關證明文件）', correct:true},
+  {id:'q11_judge', label:'依保單條款、法規與相關資料，判斷案件是否符合給付條件', correct:true},
+  {id:'q11_investigate', label:'調閱病歷、就醫紀錄或委請專業單位協助查證案件內容', correct:true},
+  {id:'q11_escalate', label:'針對複雜、爭議或高風險案件，進一步照會醫務、法務或核保等單位討論', correct:true},
+  {id:'q11_communicate', label:'與保戶、受益人、業務或相關單位溝通補件、說明進度或給付結果', correct:true},
+  {id:'q11_system', label:'使用理賠系統建立案件紀錄，追蹤處理進度並依規定時效完成核給付', correct:true},
+  {id:'q11_sales', label:'銷售保單給客戶', correct:false},
+  {id:'q11_unsure', label:'不清楚', correct:false, neutral:true}
+];
+const Q12_OPTIONS = [
+  {id:'q12_analysis', label:'資料判讀與邏輯分析能力（如比對病歷、單證與條款內容）', correct:true},
+  {id:'q12_law', label:'保險條款、法規或作業規範的理解與應用能力', correct:true},
+  {id:'q12_medical', label:'醫學常識或專業知識的學習與判讀能力（如理解診斷證明、傷病名稱）', correct:true},
+  {id:'q12_risk', label:'風險判斷與案件研判能力，評估案件是否需進一步查證', correct:true},
+  {id:'q12_communication', label:'溝通協調與同理心，能兼顧保戶感受與公司規範', correct:true},
+  {id:'q12_emotion', label:'情緒管理與客戶應對能力，處理理賠爭議或客訴情境', correct:true},
+  {id:'q12_compliance', label:'細心嚴謹、注重合規與稽核意識', correct:true},
+  {id:'q12_digital', label:'數位系統或資料工具操作能力，管理案件與數據', correct:true},
+  {id:'q12_sales', label:'銷售話術能力', correct:false},
+  {id:'q12_unsure', label:'不清楚', correct:false, neutral:true}
+];
+
+const SCALE_5_AGREE = ['非常不同意','不同意','普通','同意','非常同意'];
+const SCALE_5_BOOST = ['完全不會提升','不太會提升','普通','會提升','非常會提升'];
+const SCALE_5_INTEREST = ['完全沒興趣','興趣偏低','普通','有興趣了解','非常想了解'];
+
+const PROFILE_STATUS_OPTIONS = [
+  {id:'student', label:'在校生'},
+  {id:'grad', label:'應屆畢業生（畢業1年內）'},
+  {id:'switch', label:'已有全職工作經驗，正在考慮轉職'},
+  {id:'other', label:'其他'}
+];
+const PROFILE_MAJOR_OPTIONS = [
+  {id:'business', label:'商管／金融相關科系'},
+  {id:'stem', label:'理工科系'},
+  {id:'humanities', label:'人文社會科系'},
+  {id:'other', label:'其他科系'}
+];
+const PROFILE_AWARENESS_OPTIONS = [
+  {id:'never', label:'未曾了解過，也沒考慮過'},
+  {id:'aware', label:'稍微了解過，但還沒投遞過'},
+  {id:'considering', label:'正在考慮或已經投遞過相關職缺'},
+  {id:'working', label:'目前已經在金融保險業工作'}
+];
+const BARRIER_OPTIONS = [
+  {id:'unclear', label:'對理賠工作的實際內容不夠了解'},
+  {id:'image', label:'覺得保險／金融業形象傳統、不夠有趣'},
+  {id:'growth', label:'擔心工作發展性／晉升空間有限'},
+  {id:'salary', label:'對薪資或福利有疑慮'},
+  {id:'stereotype', label:'對保險業整體印象不佳（如業務導向的刻板印象）'},
+  {id:'boring', label:'擔心工作步調枯燥、缺乏挑戰性'},
+  {id:'none', label:'目前沒有特別障礙，我會考慮投遞相關職缺'},
+  {id:'other', label:'其他原因'}
+];
+const CHANNEL_OPTIONS = [
+  {id:'campus', label:'校園徵才活動／校園徵才博覽會'},
+  {id:'social', label:'Instagram／Threads／Facebook 等社群平台'},
+  {id:'dcard', label:'Dcard'},
+  {id:'jobsite', label:'104／1111 等求職網站'},
+  {id:'referral', label:'學長姐、同學或朋友推薦'},
+  {id:'company', label:'企業官網或官方粉專'},
+  {id:'linkedin', label:'LinkedIn'},
+  {id:'other', label:'其他管道'}
+];
+
+const AGE_SCREEN_OPTIONS = [
+  {id:'yes', label:'是'},
+  {id:'no', label:'否'}
+];
+
+const QUESTIONS = [
+  {id:'screen_age',ch:0,type:'single',options:AGE_SCREEN_OPTIONS,text:'先簡單認識你一下：你是否為Z世代（出生於1997～2012年間）？'},
+  {id:'profile_status',ch:0,type:'single',options:PROFILE_STATUS_OPTIONS,text:'先簡單認識你一下：你目前的身份是？'},
+  {id:'profile_major',ch:0,type:'single',options:PROFILE_MAJOR_OPTIONS,text:'你的科系或專業背景是？'},
+  {id:'profile_awareness',ch:0,type:'single',options:PROFILE_AWARENESS_OPTIONS,text:'在這之前，你對金融保險業（尤其是理賠工作）的了解程度是？'},
+
+  {id:'q1',ch:1,type:'scale',dim:'achievement',scale:SCALE_5_AGREE,text:'選擇工作時，我會優先確認薪資區間、獎金或調薪制度是否清楚。'},
+  {id:'q2',ch:1,type:'scale',dim:'achievement',scale:SCALE_5_AGREE,text:'如果一份工作薪資與福利無法支持我的生活規劃，即使內容有趣，我也會降低投遞意願。'},
+  {id:'q3',ch:1,type:'scale',dim:'balance',scale:SCALE_5_AGREE,text:'我可以接受工作有短期忙碌或尖峰期，但前提是工時安排、對應配套與部門支援方式要清楚。'},
+  {id:'q4',ch:1,type:'scale',dim:'balance',scale:SCALE_5_AGREE,text:'長期無意義、無補償或不透明的加班，會降低我對工作的投入感。'},
+  {id:'q5',ch:1,type:'scale',dim:'growth',scale:SCALE_5_AGREE,text:'我會被有清楚培訓、mentor 或階段性能力地圖的工作吸引。'},
+  {id:'q6',ch:1,type:'scale',dim:'growth',scale:SCALE_5_AGREE,text:'我重視一份工作是否能累積可轉移的專業能力，而不只是完成例行作業。'},
+  {id:'q7',ch:1,type:'scale',dim:'care',scale:SCALE_5_AGREE,text:'我會在意這份工作是否能對客戶、社會或他人的生活產生具體幫助。'},
+  {id:'q8',ch:1,type:'scale',dim:'care',scale:SCALE_5_AGREE,text:'團隊氛圍、主管支持與同事互動，會影響我是否願意長期留在一份工作。'},
+  {id:'q9',ch:1,type:'scale',dim:'digital',scale:SCALE_5_AGREE,text:'我期待工作中能使用數位工具、AI 或資料分析提升效率，而不是只依賴紙本或僵化流程。'},
+  {id:'q10',ch:1,type:'scale',dim:'digital',scale:SCALE_5_AGREE,text:'我喜歡用圖表、數據或系統化方式理解問題，並回報工作進度。'},
+
+  {id:'q11',ch:2,type:'multi',options:Q11_OPTIONS,text:'如果保戶或受益人提出理賠申請，你認為理賠人員可能負責哪些工作？',hint:'可複選，選出你認為符合的項目'},
+  {id:'q12',ch:2,type:'multi',options:Q12_OPTIONS,text:'你認為理賠人員需要具備哪些能力？',hint:'可複選，選出你認為符合的項目'},
+  {id:'q13',ch:2,type:'single',options:[{id:'correct',label:'✅ 正確'},{id:'wrong',label:'❌ 錯誤'},{id:'unsure',label:'❓ 不確定'}],text:'請判斷下列敘述：「保險理賠人員的主要工作是銷售保單。」'},
+
+  {id:'q14_1',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'💰',text:'透明薪資裝備：明確揭露薪資區間、獎金紅利或激勵措施'},
+  {id:'q14_2',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'🕰️',text:'平衡續航裝備：清楚說明尖峰期、加班費或補休機制、彈性工時或團隊支援方式'},
+  {id:'q14_3',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'🎓',text:'新手訓練裝備：完整新人訓練、OJT（工作崗位培訓）、mentor 或主管帶領'},
+  {id:'q14_4',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'📈',text:'成長地圖裝備：提供部門或職位的晉升／能力發展路徑'},
+  {id:'q14_5',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'🧠',text:'數位升級裝備：能有 AI 工具輔助、數據／資料分析工具、自動化流程'},
+  {id:'q14_6',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'🤝',text:'團隊補給裝備：透過新人、學長姐或主管故事了解真實團隊氛圍'},
+  {id:'q14_7',ch:3,type:'scale',dim:'gear',scale:SCALE_5_BOOST,icon:'📚',text:'專業加值裝備：提供專業證照、課程或內部學習資源補助'},
+  {id:'q15',ch:3,type:'scale',dim:'interest',scale:SCALE_5_INTEREST,text:'填完這份測驗後，你對金融保險業或理賠相關職缺的了解意願是？'},
+
+  {id:'q16',ch:4,type:'multi',options:BARRIER_OPTIONS,text:'如果你目前不會優先考慮投遞理賠相關職缺，可能的原因是？',hint:'可複選，這題沒有標準答案，誠實作答即可'},
+  {id:'q17',ch:4,type:'multi',options:CHANNEL_OPTIONS,text:'你平常都從哪裡獲取工作／職缺資訊？',hint:'可複選'},
+
+  {id:'lottery_email',ch:5,type:'text',placeholder:'example@mail.com',text:'最後，想參加抽獎的話可以留下你的 Email，我們會另外通知中獎結果',hint:'自由填答，不想參加抽獎的話可以直接留空按下一步'}
+];
+
+const CH_LABEL = {0:'暖身・認識你一下',1:'第一章・冒險家的職涯信念',2:'第二章・金融保險任務挑戰',3:'第三章・職涯裝備選擇',4:'第四章・求職雷達站',5:'🎁 抽獎登記（選填）'};
+
+/* ============================================================
+   狀態
+============================================================ */
+let state = {
+  screen:'intro', // intro | quiz | loading | result
+  qIndex:0,
+  answers:{},
+  result:null
+};
+
+/* ============================================================
+   工具：送出資料到 Google 試算表
+   ⚠️ 設定方式：
+   1. 建立一個 Google 試算表
+   2. 擴充功能 → Apps Script，貼上對應的 doPost 程式碼並部署為「網頁應用程式」
+   3. 把部署後拿到的網址貼到下面 SHEET_WEB_APP_URL 這一行的引號中間
+============================================================ */
+const SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwYtmtLTBVvL35NKRC_dmjLNV26HCd4U99IJXruNRof_R5m-9oE1W2rbcFxZ8wL6Qda/exec';
+
+function labelOf(optionsArr, id){
+  if(!id) return '';
+  const o = optionsArr.find(o=>o.id===id);
+  return o ? o.label : id;
+}
+function labelsOf(optionsArr, ids){
+  return (ids||[]).map(id=>labelOf(optionsArr, id)).join('；');
+}
+const Q13_LABELS = { correct:'正確', wrong:'錯誤', unsure:'不確定' };
+const CLAIMS_LEVEL_LABELS = { high:'高', mid:'中', low:'低' };
+
+function buildSheetPayload(record){
+  const a = record.answers || {};
+  const typeStr = (record.topKeys||[]).map(k=>TYPE_META[k]?TYPE_META[k].name:k).join('/');
+  const gear = record.topGear || [];
+  return {
+    '編號': record.id,
+    '填答時間': new Date(record.timestamp).toISOString(),
+    '出生年份為1997-2012': labelOf(AGE_SCREEN_OPTIONS, a.screen_age),
+    '職場冒險家類型': typeStr,
+    '理賠認知熟悉度': CLAIMS_LEVEL_LABELS[record.claimsLevel] || record.claimsLevel,
+    '理賠認知得分(滿分15)': record.claimsRaw,
+    '職缺了解意願(1-5)': record.q15,
+    '首選工作條件': gear[0] ? GEAR_META[gear[0]].plainName : '',
+    '次選工作條件': gear[1] ? GEAR_META[gear[1]].plainName : '',
+    '第三選工作條件': gear[2] ? GEAR_META[gear[2]].plainName : '',
+    '身份別': labelOf(PROFILE_STATUS_OPTIONS, a.profile_status),
+    '科系背景': labelOf(PROFILE_MAJOR_OPTIONS, a.profile_major),
+    '對理賠工作既有認識': labelOf(PROFILE_AWARENESS_OPTIONS, a.profile_awareness),
+    'Q1_薪資制度關注度': a.q1,
+    'Q2_薪資影響投遞意願': a.q2,
+    'Q3_忙碌但配套需清楚': a.q3,
+    'Q4_加班補償影響投入': a.q4,
+    'Q5_培訓地圖吸引力': a.q5,
+    'Q6_重視可轉移能力': a.q6,
+    'Q7_工作意義感': a.q7,
+    'Q8_團隊文化影響留任': a.q8,
+    'Q9_期待數位化流程': a.q9,
+    'Q10_偏好圖表數據方式': a.q10,
+    '理賠人員主要工作是銷售保單(判斷)': Q13_LABELS[a.q13] || a.q13 || '',
+    '理賠工作內容認知(複選)': labelsOf(Q11_OPTIONS, a.q11),
+    '理賠人員能力認知(複選)': labelsOf(Q12_OPTIONS, a.q12),
+    '投遞障礙原因(複選)': labelsOf(BARRIER_OPTIONS, a.q16),
+    '求職資訊管道(複選)': labelsOf(CHANNEL_OPTIONS, a.q17),
+    '抽獎Email(選填)': a.lottery_email || '',
+    [GEAR_META.q14_1.plainName]: a.q14_1,
+    [GEAR_META.q14_2.plainName]: a.q14_2,
+    [GEAR_META.q14_3.plainName]: a.q14_3,
+    [GEAR_META.q14_4.plainName]: a.q14_4,
+    [GEAR_META.q14_5.plainName]: a.q14_5,
+    [GEAR_META.q14_6.plainName]: a.q14_6,
+    [GEAR_META.q14_7.plainName]: a.q14_7
+  };
+}
+
+async function saveResponse(record){
+  if(!SHEET_WEB_APP_URL || SHEET_WEB_APP_URL.indexOf('PASTE_YOUR')===0){
+    console.warn('⚠️ 尚未設定 Google 試算表網址，這次作答不會被記錄。請依照說明設定 SHEET_WEB_APP_URL。');
+    return;
+  }
+  const payload = buildSheetPayload(record);
+  try{
+    await fetch(SHEET_WEB_APP_URL, {
+      method:'POST',
+      mode:'no-cors', // Apps Script會redirect且不回傳CORS header，用no-cors避免瀏覽器誤判為失敗
+      headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // 避免CORS預檢請求，Apps Script端仍會當JSON解析
+      body: JSON.stringify(payload)
+    });
+  }catch(e){
+    console.error('送出資料失敗', e);
+  }
+}
+
+/* ============================================================
+   計分
+============================================================ */
+function computeResult(answers){
+  const dims = {
+    achievement:(answers.q1||0)+(answers.q2||0),
+    balance:(answers.q3||0)+(answers.q4||0),
+    growth:(answers.q5||0)+(answers.q6||0),
+    care:(answers.q7||0)+(answers.q8||0),
+    digital:(answers.q9||0)+(answers.q10||0)
+  };
+  const max = Math.max(...Object.values(dims));
+  const topKeys = Object.keys(dims).filter(k=>dims[k]===max).slice(0,2);
+
+  const q11sel = answers.q11 || [];
+  const q12sel = answers.q12 || [];
+  const q11Score = Q11_OPTIONS.filter(o=>o.correct).filter(o=>q11sel.includes(o.id)).length;
+  const q12Score = Q12_OPTIONS.filter(o=>o.correct).filter(o=>q12sel.includes(o.id)).length;
+  const q13Score = answers.q13 === 'wrong' ? 1 : 0;
+  const claimsRaw = q11Score+q12Score+q13Score;
+  const claimsMax = 6+8+1;
+  const claimsPct = claimsRaw/claimsMax;
+  let claimsLevel = 'low';
+  if(claimsPct>=0.7) claimsLevel='high';
+  else if(claimsPct>=0.4) claimsLevel='mid';
+
+  const hitDistractor = q11sel.includes('q11_sales') || q12sel.includes('q12_sales');
+
+  const gearScores = Object.keys(GEAR_META).map(id=>({id,score:answers[id]||0,...GEAR_META[id]}));
+  gearScores.sort((a,b)=>b.score-a.score);
+  const topGear = gearScores.slice(0,3);
+
+  return {dims, topKeys, claimsRaw, claimsMax, claimsPct, claimsLevel, hitDistractor, topGear, q15:answers.q15||0};
+}
+
+const CLAIMS_TEXT = {
+  high:'你對理賠工作已經有蠻扎實的理解！你知道理賠不只是「審文件」，還包含條款判斷、資料查證、跨單位協調與系統化案件管理，是一份需要細心與邏輯分析力，也需要良好溝通能力的專業工作。',
+  mid:'你已經知道理賠工作不只是處理文件，也包含條款判斷、資料分析與溝通協調。若未來職缺能更清楚呈現工作日常與培訓路徑，可能會幫助你更完整理解這份工作的樣貌。',
+  low:'你可能對理賠工作還不太熟悉，其實它不只是「審核表單」，還牽涉到條款判斷、病歷查證與跨單位溝通，是需要專業知識與細心特質的工作，說不定比你想像的更有挑戰性！'
+};
+const DISTRACTOR_TIP = '小知識：理賠人員與業務人員是完全不同的角色分工喔！業務負責銷售保單，理賠人員則專注在保戶申請理賠後的審核、查證與核給付流程，兩者需要的專業技能也不太一樣。';
+
+/* ============================================================
+   渲染主流程
+============================================================ */
+const app = document.getElementById('app');
+render();
+
+function render(){
+  if(state.screen==='intro') renderIntro();
+  else if(state.screen==='quiz') renderQuiz();
+  else if(state.screen==='ineligible') renderIneligible();
+  else if(state.screen==='loading') renderLoading();
+  else if(state.screen==='result') renderResult();
+}
+
+/* ---------- 樹苗成長圖 ---------- */
+function treeSVG(stage){
+  // stage 0..3
+  const leaves = stage>=1 ? `<circle cx="28" cy="20" r="12" fill="#8FDCB4"/>` : '';
+  const leaves2 = stage>=2 ? `<circle cx="17" cy="27" r="10" fill="#3EAE86"/><circle cx="39" cy="27" r="10" fill="#3EAE86"/>` : '';
+  const fruit = stage>=3 ? `<circle cx="20" cy="18" r="3" fill="#F2B705"/><circle cx="36" cy="24" r="3" fill="#F2B705"/><circle cx="28" cy="30" r="3" fill="#FF8A61"/>` : '';
+  const trunkH = 10+stage*6;
+  return `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+    <rect x="24" y="${44-trunkH+10}" width="8" height="${trunkH}" rx="3" fill="#8B5E34"/>
+    ${leaves}${leaves2}${fruit}
+  </svg>`;
+}
+
+/* ---------- Header (topbar) ---------- */
+function topbarHTML(){
+  return `<div class="topbar">
+    <div class="brand"><span class="dot"></span>職場冒險家測驗</div>
+  </div>`;
+}
+
+/* ---------- 首頁 ---------- */
+function renderIntro(){
+  app.innerHTML = `
+    ${topbarHTML()}
+    <div class="tree-stage">${treeSVG(0)}</div>
+    <div class="screen">
+      <div class="intro-hero">
+        <div class="intro-eyebrow">CATHAY CAREER QUEST</div>
+        <div class="intro-title display">🔍 如果進入金融保險業，<br>Z世代的你會是哪種職場冒險家？</div>
+        <div class="intro-sub">未來的你，最適合在金融保險業展開哪一種職涯冒險？透過幾個職場情境挑戰，探索你的工作價值觀、對保險理賠工作的理解，以及哪些制度會提升你對金融保險職缺的興趣。</div>
+        <div class="intro-meta">
+          <span class="pill">⏱ 約 4-5 分鐘</span>
+          <span class="pill">🌱 22 個小任務</span>
+          <span class="pill">🎯 沒有標準答案</span>
+        </div>
+      </div>
+      <div class="intro-cards">
+        <div class="mini-card"><div class="ico">🧭</div><div class="txt"><strong>第一章・冒險信念</strong><span>10 個情境，探索你的工作價值觀</span></div></div>
+        <div class="mini-card"><div class="ico">📋</div><div class="txt"><strong>第二章・任務挑戰</strong><span>認識理賠工作的真實樣貌</span></div></div>
+        <div class="mini-card"><div class="ico">🎒</div><div class="txt"><strong>第三章・裝備選擇</strong><span>找出最能打動你的職涯制度</span></div></div>
+        <div class="mini-card"><div class="ico">📡</div><div class="txt"><strong>第四章・求職雷達站</strong><span>告訴我們你平常怎麼找工作</span></div></div>
+      </div>
+      <button class="cta-btn" onclick="startQuiz()">🌱 開始種下我的職涯樹</button>
+    </div>
+  `;
+}
+window.startQuiz = function(){
+  state.screen='quiz'; state.qIndex=0; state.answers={};
+  render();
+};
+
+/* ---------- 測驗頁 ---------- */
+function renderQuiz(){
+  const q = QUESTIONS[state.qIndex];
+  const total = QUESTIONS.length;
+  const pct = Math.round(((state.qIndex)/total)*100);
+  const treeStage = q.ch===0?0:(q.ch===1?1:(q.ch===2?2:3));
+  const answered = state.answers[q.id];
+  const canNext = (q.type==='multi' || q.type==='text') ? true : (answered!==undefined && answered!==null);
+
+  let bodyHTML = '';
+  if(q.type==='scale'){
+    const val = state.answers[q.id];
+    bodyHTML = `
+      <div class="scale-row">
+        <div>
+          <div class="scale-caption"><span>${q.scale[0]}</span><span>${q.scale[4]}</span></div>
+          <div class="scale-options">
+            ${[1,2,3,4,5].map(n=>`
+              <div class="scale-opt ${val===n?'sel':''}" onclick="selectScale('${q.id}',${n})">
+                <span class="num">${n}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  } else if(q.type==='multi'){
+    const sel = state.answers[q.id] || [];
+    bodyHTML = `<div class="choice-list">
+      ${q.options.map(o=>`
+        <div class="choice-card ${sel.includes(o.id)?'sel':''}" onclick="toggleMulti('${q.id}','${o.id}')">
+          <div class="choice-mark">${sel.includes(o.id)?'✓':''}</div>
+          <div class="choice-label">${o.label}</div>
+        </div>`).join('')}
+    </div>`;
+  } else if(q.type==='single'){
+    const val = state.answers[q.id];
+    bodyHTML = `<div class="choice-list">
+      ${q.options.map(o=>`
+        <div class="choice-card single ${val===o.id?'sel':''}" onclick="selectSingle('${q.id}','${o.id}')">
+          <div class="choice-mark">${val===o.id?'●':''}</div>
+          <div class="choice-label" style="font-weight:700;">${o.label}</div>
+        </div>`).join('')}
+    </div>`;
+  } else if(q.type==='text'){
+    const val = state.answers[q.id] || '';
+    bodyHTML = `<div class="text-input-wrap">
+      <input type="email" class="text-input" id="textInput_${q.id}" placeholder="${q.placeholder||''}" value="${val.replace(/"/g,'&quot;')}" oninput="setTextAnswer('${q.id}', this.value)">
+    </div>`;
+  }
+
+  app.innerHTML = `
+    ${topbarHTML()}
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%;"></div></div>
+      <div class="progress-meta"><span class="chapter-tag">${CH_LABEL[q.ch]}</span><span>${state.qIndex+1} / ${total}</span></div>
+    </div>
+    <div class="tree-stage">${treeSVG(treeStage)}</div>
+    <div class="screen">
+      <div class="q-card">
+        <div class="q-chapter-label"><span class="q-num">Q${state.qIndex+1}</span> ${q.icon?q.icon+' ':''}</div>
+        <div class="q-text">${q.text}</div>
+        ${q.hint?`<div class="q-hint">${q.hint}</div>`:''}
+        ${bodyHTML}
+        <div class="nav-row">
+          ${state.qIndex>0?`<button class="nav-btn back" onclick="prevQ()">上一題</button>`:''}
+          <button class="nav-btn next" id="nextBtn" ${canNext?'':'disabled'} onclick="nextQ()">${state.qIndex===total-1?'完成測驗 🎉':'下一題'}</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+window.selectScale = function(id,val){
+  state.answers[id]=val; renderQuiz();
+};
+window.toggleMulti = function(id,optId){
+  const cur = state.answers[id] || [];
+  const idx = cur.indexOf(optId);
+  if(idx>-1) cur.splice(idx,1); else cur.push(optId);
+  state.answers[id]=cur;
+  renderQuiz();
+};
+window.selectSingle = function(id,val){
+  state.answers[id]=val; renderQuiz();
+};
+window.setTextAnswer = function(id,val){
+  state.answers[id]=val;
+};
+window.prevQ = function(){
+  if(state.qIndex>0){ state.qIndex--; render(); }
+};
+window.nextQ = function(){
+  const q = QUESTIONS[state.qIndex];
+  if(q.type!=='multi' && q.type!=='text' && (state.answers[q.id]===undefined || state.answers[q.id]===null)) return;
+  if(q.id==='screen_age' && state.answers.screen_age==='no'){
+    state.screen='ineligible'; render(); return;
+  }
+  if(state.qIndex < QUESTIONS.length-1){
+    state.qIndex++; render();
+  } else {
+    finishQuiz();
+  }
+};
+
+/* ---------- 篩選未通過畫面 ---------- */
+function renderIneligible(){
+  app.innerHTML = `
+    ${topbarHTML()}
+    <div class="tree-stage">${treeSVG(0)}</div>
+    <div class="screen">
+      <div class="intro-hero">
+        <div class="intro-eyebrow">感謝你的參與</div>
+        <div class="intro-title display">這次的測驗<br>主要想邀請 1997～2012 年出生的朋友參加</div>
+        <div class="intro-sub">因為這份問卷是針對 Z 世代求職者的工作價值觀調查，目前還是想先集中蒐集這個年齡區間的想法。真的很謝謝你願意點進來，也歡迎把這份測驗分享給符合條件的朋友！</div>
+      </div>
+      <button class="cta-secondary" style="margin-top:20px;" onclick="restartQuiz()">🔁 返回首頁</button>
+    </div>
+  `;
+}
+
+/* ---------- Loading -> Result ---------- */
+function renderLoading(){
+  app.innerHTML = `
+    ${topbarHTML()}
+    <div class="loading-screen">
+      ${treeSVG(3)}
+      <div class="display" style="font-size:16px;font-weight:700;color:var(--deep);">正在為你長出職涯樹...</div>
+      <p>統計你的冒險家類型與裝備偏好中</p>
+      <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+    </div>
+  `;
+}
+async function finishQuiz(){
+  state.screen='loading'; render();
+  const result = computeResult(state.answers);
+  state.result = result;
+
+  const record = {
+    id: 'r'+Date.now()+Math.random().toString(36).slice(2,8),
+    timestamp: Date.now(),
+    answers: state.answers,
+    dims: result.dims,
+    topKeys: result.topKeys,
+    claimsRaw: result.claimsRaw,
+    claimsLevel: result.claimsLevel,
+    topGear: result.topGear.map(g=>g.id),
+    q15: result.q15
+  };
+  await saveResponse(record);
+
+  setTimeout(()=>{ state.screen='result'; render(); }, 1200);
+}
+
+/* ---------- 結果頁 ---------- */
+function renderResult(){
+  const r = state.result;
+  const types = r.topKeys.map(k=>TYPE_META[k]);
+  const isMixed = types.length>1;
+  const primary = types[0];
+
+  const typeHeader = isMixed
+    ? `<div class="result-type-icon">${types.map(t=>t.icon).join(' × ')}</div>
+       <div class="result-type-name display">${types.map(t=>t.name).join(' × ')}</div>`
+    : `<div class="result-type-icon">${primary.icon}</div>
+       <div class="result-type-name display">${primary.name}</div>`;
+
+  const kwSet = isMixed ? Array.from(new Set(types.flatMap(t=>t.keywords))).slice(0,6) : primary.keywords;
+
+  const typeDescBlock = types.map(t=>`
+    <div style="margin-bottom:${isMixed?'16px':'0'};">
+      ${isMixed?`<div style="font-weight:700;color:var(--deep);font-size:13.5px;margin-bottom:6px;">${t.icon} ${t.name}</div>`:''}
+      <div class="result-desc">${t.desc}</div>
+      ${!isMixed?`
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        ${t.gear.map((g,i)=>`<div style="display:flex;gap:10px;align-items:center;font-size:13px;color:var(--text-dark);">
+          <span>${['🥇','🥈','🥉'][i]}</span><span>${g}</span></div>`).join('')}
+      </div>`:''}
+    </div>
+  `).join('');
+
+  const gearHTML = r.topGear.map((g,i)=>`
+    <div class="gear-item">
+      <div class="gear-medal">${['🥇','🥈','🥉'][i]}</div>
+      <div class="gear-icon">${g.icon}</div>
+      <div style="flex:1;">
+        <div class="gear-name">${g.name}</div>
+        <div class="gear-desc">${g.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const claimsPct = Math.round(r.claimsPct*100);
+  const claimsLabel = {high:'熟悉度：高',mid:'熟悉度：中等',low:'熟悉度：待加強'}[r.claimsLevel];
+
+  app.innerHTML = `
+    ${topbarHTML()}
+    <div class="screen" style="padding-top:2px;">
+      <div class="result-hero">
+        <div class="result-eyebrow">YOUR ADVENTURER TYPE</div>
+        ${typeHeader}
+        <div class="result-keywords">${kwSet.map(k=>`<span class="kw">#${k}</span>`).join('')}</div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title"><span class="badge">🧭</span>你的職場冒險家類型</div>
+        ${typeDescBlock}
+      </div>
+
+      <div class="section-card">
+        <div class="section-title"><span class="badge">🎒</span>最吸引你的職涯裝備 Top 3</div>
+        <div class="gear-rank">${gearHTML}</div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title"><span class="badge">📋</span>你對理賠任務的熟悉程度</div>
+        <div class="meter-wrap">
+          <div class="meter-label"><span>${claimsLabel}</span><span>${claimsPct}%</span></div>
+          <div class="meter-track"><div class="meter-fill" style="width:${claimsPct}%;"></div></div>
+        </div>
+        <div class="result-desc" style="margin-bottom:0;">${CLAIMS_TEXT[r.claimsLevel]}</div>
+        ${r.hitDistractor?`<div class="tip-box"><b>💡 ${DISTRACTOR_TIP}</b></div>`:''}
+      </div>
+
+      <div class="action-row">
+        <button class="cta-btn" onclick="restartQuiz()">🔁 再測一次</button>
+      </div>
+    </div>
+  `;
+}
+window.restartQuiz = function(){
+  state.screen='intro'; state.qIndex=0; state.answers={}; state.result=null;
+  render();
+};
+</script>
+</body>
+</html>
